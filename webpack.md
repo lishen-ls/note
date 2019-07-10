@@ -138,15 +138,16 @@ module.exports = {
     }
   ];
   ```
+  >
 
 ## 插件配置
 
 - 使用插件需要修改 webpack.config.js 的 plugins 字段
 - 使用插件前需要 require 引入插件
-- js 代码压缩插件 uglifyjs-webpack-glugin
+- js 代码压缩插件 uglifyjs-webpack-plugin
 
   ```javascript
-  //uglifyjs-webpack-glugin引用后命名为uglify
+  //uglifyjs-webpack-plugin引用后命名为uglify
   plugins: [new uglify()];
   ```
 
@@ -160,7 +161,8 @@ module.exports = {
         // 压缩html
         removeAttributeQuotes: true
       },
-      hash: true, // 不缓存JS
+      filename: "index.html", //打包后生成的文件名
+      hash: true, // 为js文件生成一个hash值，可以用于防止JS缓存
       template: "./src/index.html" // 被打包的html文件的路径
     })
   ];
@@ -221,7 +223,7 @@ module.exports = {
 
 ### CSS 处理
 
-1. Less 打包与分离  
+1. Less 打包与分离
    ```
    npm install --save-dev less less-loader
    ```
@@ -258,13 +260,13 @@ module.exports = {
    > ```
 2. Sass 打包与分离  
    使用方式与 Less 一致  
-   安装 node-sass 和 sass-loader  
+   安装 node-sass 和 sass-loader
    ```
    npm install --save-dev node-sass sass-loader
    ```
 3. CSS3 属性前缀自动生成
 
-- 安装 postcss-loader 和 autoprefixer  
+- 安装 postcss-loader 和 autoprefixer
   ```
   npm install --save-dev postcss-loader autoprefixer
   ```
@@ -294,7 +296,7 @@ module.exports = {
 
 4. 去掉未使用的 CSS
 
-- 安装 PurifyCSS-webpack 和 purify-css  
+- 安装 PurifyCSS-webpack 和 purify-css
   ```
   npm install -D purifycss-webpack purify-css
   ```
@@ -309,7 +311,7 @@ module.exports = {
 
 ### Babel
 
-- 安装 Babel  
+- 安装 Babel
   ```
   npm install -D babel-core babel-loader babel-preset-es2015 babel-preset-react
   ```
@@ -338,10 +340,10 @@ module.exports = {
   }
   ```
 
-- ENV  
+- ENV
   ```
   npm install -D babel-preset-env
-  ```  
+  ```
   .babelrc
   ```javascript
   {
@@ -366,16 +368,16 @@ module.exports = {
 
 ## 错误
 
-1. Error: Cannot find module 'uglifyjs-webpack-plugin'  
+1. Error: Cannot find module 'uglifyjs-webpack-plugin'
    ```
    npm install -D uglifyjs-webpack-plugin
    ```
-2. Error: Cannot find module 'webpack/lib/RequestShortener'  
+2. Error: Cannot find module 'webpack/lib/RequestShortener'
    ```
    npm install -D webpack webpack-cli
    ```
    > 即使全局安装了 webpack 以及 webpack-cli 仍然需要本地安装
-3. webpack4.0 中使用 extract-text-webpack-plugin  
+3. webpack4.0 中使用 extract-text-webpack-plugin
    ```
    npm install -D extract-text-webpack-plugin@next
    ```
