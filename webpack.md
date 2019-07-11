@@ -4,9 +4,12 @@
 
 > 以下使用的插件和 loader 需要手动 npm install  
 > [webpack3.X](http://jspang.com/posts/2017/09/16/webpack3.html)  
-> 使用的 webpack 版本为 4.53.0
+> 使用的 webpack 版本为 4.35.3
 
 ## webpack 的安装
+
+> 官方推荐本地安装  
+> 通过 package.json 中的 script 来启动 webpack
 
 ```
 sudo npm install -g webpack
@@ -49,7 +52,7 @@ module.exports = {
    ```javascript
    entry: {
      entry: './src/entry.js'
-     //这里的entry变量名随便写
+     //这里的entry默认是出口文件的文件名
    }
    ```
 
@@ -58,7 +61,7 @@ module.exports = {
    output: {
      //打包输出路径
      path: path.resolve(__dirname,'xxx'),
-     //输出的文件名
+     //输出的文件名,可以写路径让所有js文件放置在一个文件夹里
      filename: 'bundle.js'
    }
    ```
@@ -67,11 +70,12 @@ module.exports = {
    entry: {
      entry: "./src/entry.js",
      entry2: "./src/entry2.js"
+     //键值默认是出口文件的文件名
    },
    output: {
      path: path.resolve(__dirname, "dist"),
      filename: "[name].js"
-     //[name]表示输出的文件名依据入口文件来命名
+     //[name]表示依据入口文件配置来命名输出的文件
    }
    ```
 
@@ -96,7 +100,8 @@ module.exports = {
      "build": "webpack"
    }
    ```
-   > 使用`npm run server`来启动 webpack-dev-server 热更新
+   > 使用`npm run server`来启动 webpack-dev-server 热更新  
+   > 使用`npm run build`进行打包
 
 ## 模块配置
 
@@ -105,7 +110,7 @@ module.exports = {
 2. 配置示例
 
 - 使用 loader 需要修改 webpack.config.js 的 rules 字段，筛选出不同的文件类型，采用不同给的 loader
-- style-looder 和 css-loader
+- style-loader 和 css-loader
   > 三种写法
   ```javascript
   rules: [
@@ -168,7 +173,7 @@ module.exports = {
   ];
   ```
 
-## 常见配置
+## 常见插件与加载器
 
 ### 图片处理
 
@@ -312,10 +317,16 @@ module.exports = {
 ### Babel
 
 - 安装 Babel
+  > 老版本
   ```
   npm install -D babel-core babel-loader babel-preset-es2015 babel-preset-react
   ```
+  > 新版本
+  ```
+  npm install -D @babel/core @babel/preset-env @babel/preset-react
+  ```
 - webpack.config.js
+  > 旧版本
   ```javascript
   {
     test: /\.(js|jsx)/,
@@ -330,14 +341,22 @@ module.exports = {
   ```
 - .babelrc
 
-  > babel 的 options 可以从 webpack.config.js 中分离，写到项目根目录的.babelrc 文件中
-
-  .babelrc
+  > babel 的 options 可以从 webpack.config.js 中分离，写到项目根目录的.babelrc 文件中  
+  > 旧版本
 
   ```javascript
   {
     "presets":["react","es2015"]
   }
+  ```
+
+  > 新版本
+
+  ```javascript
+  {
+    "presets":["@babel/preset-env"]
+  }
+
   ```
 
 - ENV
@@ -350,6 +369,27 @@ module.exports = {
     "presets":["react","env"]
   }
   ```
+
+### BannerPlugin
+
+- webpack 自带该插件，引入 webpack 即可使用`webpack.BannerPlugin`
+- 用于标记开发者声明
+
+### watch
+
+> 修改`watch`字段可以启用或关闭监听，值为 boolean  
+> 修改 watchOptions 以控制 watch 的模式
+
+```javascript
+watchOptions:{
+    //检测修改的时间，以毫秒为单位
+    poll:1000,
+    //防止重复保存而发生重复编译错误。这里设置的500是半秒内重复保存，不进行打包操作
+    aggregateTimeout:500,
+    //不监听的目录
+    ignored:/node_modules/,
+}
+```
 
 ### 打包后调试
 
@@ -365,6 +405,51 @@ module.exports = {
    ```javascript
    devtool: "eval-source-map";
    ```
+
+## 引入其他模块打包
+
+1. 直接在 js 文件中`import`
+2. 使用`ProvidePlugin`
+   ```javascript
+   //ProvidePlugin是webpack自带的插件，引入webpack即可使用webpack.ProvidePlugin
+   plugins: [
+     new webpack.ProvidePlugin({
+       $: "jquery"
+       //以jquery举例
+     })
+   ];
+   ```
+
+## 静态资源集中输出
+
+- copy-webpack-plugin 插件
+  ```javascript
+  new Copy([
+    {
+      from: __dirname + "/src/public",
+      to: "./public"
+    }
+  ]);
+  ```
+
+## 分离第三方模块
+
+- 使用 optimization 的 splitChunks 配置
+
+  ```javascript
+  optimization:{
+    splitChunks:{
+      chunks:'all',
+      //需要分离的模块，all：所有模块，async：按需加载模块，initial：初始块
+      automaticNameDelimiter: '~',
+      //命名分隔符
+      name:'jquery'
+      //分离的模块的名称
+    }
+  }
+  ```
+
+- 详细配置
 
 ## 错误
 

@@ -38,7 +38,9 @@
    ```
    git log
    ```
+   ![alt log](./git-img/log.png)
    > 使用`--pretty=online`简化 log 输出
+   > ![](./git-img/简化log.png)
 2. 版本回退
    ```
    git reset --hard HEAD^
@@ -51,4 +53,8 @@
    > 可以回到指定的版本  
    > 版本号可以不写全，只要前几位是唯一的  
    > git 版本回退的本质是修改 HEAD 指向，所以版本的修改速度很快  
-   >![alt HEAD示例](./git-img/HEAD.png)
+   > ![alt HEAD示例](./git-img/HEAD.png)
+3. 查看工作区与版本库最新版本的差别
+   ```
+   git diff HEAD --<filename>
+   ```

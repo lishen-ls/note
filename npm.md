@@ -62,7 +62,7 @@
   > 项目内使用 unlink xxx 取消对模块的链接
 - adduser
 
-  > 用于注册 npmjs.com 的账户
+  > 为注册表添加npm注册的账户，login,ad
 
 - publish 发布模块
   > 提交前需要注册 npmjs 账户
