@@ -8,7 +8,9 @@
 - 同组件路由跳转通过判断 Props 中的 match 是否改变来决定是否 AJAX
 
 ## Ref
-> 不能在函数式组件上使用ref，因为函数式组件没有实例，但是可以在函数式组件内部使用ref，指向class组件和DOM元素
+
+> 不能在函数式组件上使用 ref，因为函数式组件没有实例，但是可以在函数式组件内部使用 ref，指向 class 组件和 DOM 元素
+
 ### React.createRef()
 
 - 使用`React.createRef`创建，在元素或组件上使用`ref={xxx}`，引用名为 xxx，可用于获取高阶组件的子组件实例
@@ -82,9 +84,28 @@
   }
   ```
 
+### 函数中获取元素
+
+```javascript
+ //在元素的ref属性上使用函数，其参数为该元素
+  ref={
+    ref=>{
+      //...
+    }
+  }
+//or
+  ref={
+    this.func
+  }
+```
+
 ### React.forwartRef()
 
 ## Redux
+
+### 流程
+
+- UI -> Actions -> Reducers -> Store -> UI
 
 ### applyMiddleware
 
@@ -102,3 +123,5 @@ function example() {
 ```
 
 ### redux-thunk
+### redux-saga
+- 
