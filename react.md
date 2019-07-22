@@ -99,6 +99,8 @@
   }
 ```
 
+> 函数式组件可以使用`useRef`来访问获取元素,`useRef.current`可以存储任何值，并且可变，例如`useRef(1)`，其返回值为`{current:1}`
+
 ### React.forwartRef()
 
 ## Redux
@@ -123,5 +125,9 @@ function example() {
 ```
 
 ### redux-thunk
+
 ### redux-saga
-- 
+
+-
+
+## Hook

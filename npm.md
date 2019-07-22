@@ -72,3 +72,5 @@
   > 付费用户可发布私有模块  
   > 私有模块在初始化时使用以下命令  
   > `npm init --scope=<xxxx>`
+
+- cache clean -f 清除缓存
